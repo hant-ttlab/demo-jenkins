@@ -6,11 +6,11 @@ pipeline {
   }
 
   stages {
-    stage('Adjust traffic') {
+    stage('build') {
       steps {
-        script {
-          env.GREEN_TRAFFIC = sh(script:"kubectl get ingress ${ECR_REPOSITORY} --namespace ${GREEN_NAMESPACE} -o json | jq '.metadata.annotations[\"nginx.ingress.kubernetes.io/canary-weight\"]' -r", returnStdout: true).trim()
-        }
+        // script {
+        //   env.GREEN_TRAFFIC = sh(script:"kubectl get ingress ${ECR_REPOSITORY} --namespace ${GREEN_NAMESPACE} -o json | jq '.metadata.annotations[\"nginx.ingress.kubernetes.io/canary-weight\"]' -r", returnStdout: true).trim()
+        // }
         sh 'printf "Current Green Traffic: ${GREEN_TRAFFIC}%%\\nNew Green Traffic: ${GREEN_TRAFFIC_PERCENT}%%"'
         
         // Wait for input
@@ -24,3 +24,4 @@ pipeline {
     }
   }
 }
+
